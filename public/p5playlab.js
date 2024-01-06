@@ -1,3 +1,4 @@
+let roads = [];
 
 function preload() {
     // // Step 2: Load the airplane image
@@ -15,6 +16,7 @@ function preload() {
     // mountains[3].addImage(loadImage('images/m2.png'));
 
     // // Step 5: Load the mountain images
+    roads = craeteSprite()
 }
 
 function setup() {
