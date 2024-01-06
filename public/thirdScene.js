@@ -47,6 +47,15 @@ function preload() {
         hpImage.push(image);
     }
 
+    setTimeout(function() {
+        let endImage = loadAndScaleImage("images/EndScene/endScene.png", 0.2);
+        endScene = createSprite(width/2, -30);
+        endScene.addImage(endImage);
+        endScene.velocity.y = 2;
+    }, 10000)
+
+
+
 }
 
 function setup() {
@@ -82,6 +91,10 @@ function draw() {
             obstacles.splice(i, 1);
         }
     }
+
+    setTimeout(function(){
+        window.location.href = 'scene6.html';
+    }, 11000);
 }
 
 function keyPressed() {
