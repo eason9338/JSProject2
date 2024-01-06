@@ -27,6 +27,7 @@ function preload() {
     //imageMode(CENTER);
     scooter = createSprite(scooterX, scooterY);
     scooter.addImage(loadAndScaleImage('images/BeginScene/Scooter.png', 0.08));
+    scooter.setCollider("rectangle", 0, 0, scooter.width * 0.8, scooter.height * 0.5);
 
     carImage = loadAndScaleImage("images/Gaming/barriers/indianTruck.png", 0.05);
 
@@ -48,7 +49,7 @@ function draw() {
     let roadY = height / 2 + 100;
     animation(roads, roadX, roadY);
     
-    image(hpImage[1], 10, 10);
+    image(hpImage[hp-1], 10, 10);
     console.log(hpImage[1]);
 
     drawSprites();
@@ -63,19 +64,27 @@ function draw() {
             cars.splice(i, 1);
             console.log("car deleted");
         }
+
+        if(scooter.overlap(cars[i])){
+            playerHit();
+            cars[i].remove();
+            cars.splice(i, 1);
+        }
     }
 }
 
 function keyPressed() {
-    if(keyCode === LEFT_ARROW && laneNum != 0){
+    if(keyCode === 65 && laneNum != 0){
         laneNum -= 1;
         scooter.position.x = lanesX[laneNum];
         console.log(laneNum);
-    }else if(keyCode === RIGHT_ARROW && laneNum != 2){
+    }else if(keyCode === 68 && laneNum != 2){
         laneNum += 1;
         scooter.position.x = lanesX[laneNum];
         console.log(laneNum);
     }
+
+    
 }
 
 function loadAndScaleImage(path, scale) {
@@ -105,4 +114,11 @@ function createCar() {
     }
 
     cars.push(car);
+}
+
+function playerHit() {
+    hp --;
+    if(hp <= 0) {
+        hp = 0;
+    }
 }
