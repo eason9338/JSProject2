@@ -18,6 +18,10 @@ let lanesX = [scooterX - laneWidth, scooterX, scooterX + laneWidth];
 let hp = 5;
 let hpImage = [];
 
+let gameTime = 10000;
+let isGaming = true;
+let endImage;
+
 function preload() {
    
     let scaledImages = [];
@@ -47,12 +51,17 @@ function preload() {
         hpImage.push(image);
     }
 
+    endImage = loadAndScaleImage("images/EndScene/endScene.png", 0.2);
     setTimeout(function() {
-        let endImage = loadAndScaleImage("images/EndScene/endScene.png", 0.2);
         endScene = createSprite(width/2, -30);
         endScene.addImage(endImage);
         endScene.velocity.y = 2;
-    }, 10000)
+        for(let i = obstacles.length - 1; i >= 0; i--) {
+            obstacles[i].remove();
+            obstacles.splice(i, 1);
+        }
+        isGaming = false;
+    }, gameTime);
 
 
 
@@ -75,7 +84,7 @@ function draw() {
     drawSprites();
 
     if(frameCount % 60 == 0) {
-        createObstacle();
+        createObstacle(isGaming);
     }
 
     for(let i = obstacles.length - 1; i >= 0; i--) {
@@ -94,7 +103,7 @@ function draw() {
 
     setTimeout(function(){
         window.location.href = 'scene6.html';
-    }, 11000);
+    }, 11500);
 }
 
 function keyPressed() {
@@ -118,32 +127,42 @@ function loadAndScaleImage(path, scale) {
     return img;
 }
 
-function createObstacle() {
-    let obstacleLane = [scooterX - obstacleLaneWidth, scooterX, scooterX + obstacleLaneWidth];
-    let laneIndex = floor(random(0, obstacleLane.length));
-    let obstacle = createSprite(obstacleLane[laneIndex], -50, 200, 200);
-    obstacle.addImage(obstacleImage[floor(random(0, obstacleImage.length))]);
-    obstacle.velocity.y = random(3, 7);
+function createObstacle(isGaming) {
+    if(isGaming){
+        let obstacleLane = [scooterX - obstacleLaneWidth, scooterX, scooterX + obstacleLaneWidth];
+        let laneIndex = floor(random(0, obstacleLane.length));
+        let obstacle = createSprite(obstacleLane[laneIndex], -50, 200, 200);
+        obstacle.addImage(obstacleImage[floor(random(0, obstacleImage.length))]);
+        obstacle.velocity.y = random(3, 7);
 
-    let turnRadians = radians(15);
-    switch(laneIndex){
-        case 2:
-            obstacle.velocity.x = obstacle.velocity.y * tan(turnRadians);
-            break;
-        case 0:
-            obstacle.velocity.x = obstacle.velocity.y * tan(turnRadians * -1);
-            break;
-        default:
-            break;
+        let turnRadians = radians(15);
+        switch(laneIndex){
+            case 2:
+                obstacle.velocity.x = obstacle.velocity.y * tan(turnRadians);
+                break;
+            case 0:
+                obstacle.velocity.x = obstacle.velocity.y * tan(turnRadians * -1);
+                break;
+            default:
+                break;
+        }
+
+        obstacles.push(obstacle);
+    }else {
+        
+        return;
     }
-
-    obstacles.push(obstacle);
+    
 }
 
 function playerHit() {
     hp --;
     if(hp <= 0) {
         hp = 0;
-        window.location.href = 'scene4.html';
+
+        scooter.addImage("Explosion.PNG");
+        setTimeout(function() {
+            window.location.href = 'scene4.html';
+        }, 1000);
     }
 }
