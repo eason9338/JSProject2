@@ -16,7 +16,12 @@ function preload() {
     // mountains[3].addImage(loadImage('images/m2.png'));
 
     // // Step 5: Load the mountain images
-    roads = craeteSprite()
+    for(let i = 1; i < 5; i++) {
+        roads[i] = createSprite(600, 200);
+        let a = "images/Gaming/roads/road" + i + '.png';
+
+        roads[i].addImage(loadImage(a));
+    }
 }
 
 function setup() {
