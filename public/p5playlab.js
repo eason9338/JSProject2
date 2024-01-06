@@ -1,7 +1,7 @@
 let roads;
 let scooter;
-let car;
-let cars = [];
+let obstacle;
+let obstacles = [];
 
 let width = 1250;
 let height = 690;
@@ -10,7 +10,9 @@ let scooterX = width / 2;
 let scooterY = height - 100;
 let laneNum = 1;
 let laneWidth = 320;
-let carLaneWidth = 180;
+
+let obstacleLaneWidth = 180;
+let obstacleImage = []
 let lanesX = [scooterX - laneWidth, scooterX, scooterX + laneWidth];
 
 let hp = 5;
@@ -29,7 +31,16 @@ function preload() {
     scooter.addImage(loadAndScaleImage('images/BeginScene/Scooter.png', 0.08));
     scooter.setCollider("rectangle", 0, 0, scooter.width * 0.8, scooter.height * 0.5);
 
-    carImage = loadAndScaleImage("images/Gaming/barriers/indianTruck.png", 0.05);
+    obstacleImage.push(loadAndScaleImage("images/Gaming/barriers/indianTruck.png", 0.05));
+    for(let i = 1; i <= 3; i++) {
+        obstacleImage.push(loadAndScaleImage("images/Gaming/barriers/rock"+i+".png", 0.2));
+    }
+    obstacleImage.push(loadAndScaleImage("images/Gaming/barriers/greenLight.png", 0.10));
+    obstacleImage.push(loadAndScaleImage("images/Gaming/barriers/redLight.png", 0.10));
+    obstacleImage.push(loadAndScaleImage("images/Gaming/barriers/yellowLight.png", 0.10));
+    obstacleImage.push(loadAndScaleImage("images/Gaming/barriers/cat.png", 0.15));
+    obstacleImage.push(loadAndScaleImage("images/Gaming/barriers/branch.png", 0.15));
+
 
     for(let i = 1; i <= 5; i++) {
         let image = loadAndScaleImage("images/Gaming/health/" + i + "H.PNG", 0.22);
@@ -55,20 +66,20 @@ function draw() {
     drawSprites();
 
     if(frameCount % 60 == 0) {
-        createCar();
+        createObstacle();
     }
 
-    for(let i = cars.length - 1; i >= 0; i--) {
-        if(cars[i].position.y > height + 100) {
-            cars[i].remove();
-            cars.splice(i, 1);
-            console.log("car deleted");
+    for(let i = obstacles.length - 1; i >= 0; i--) {
+        if(obstacles[i].position.y > height + 100) {
+            obstacles[i].remove();
+            obstacles.splice(i, 1);
+            console.log("obstacle deleted");
         }
 
-        if(scooter.overlap(cars[i])){
+        if(scooter.overlap(obstacles[i])){
             playerHit();
-            cars[i].remove();
-            cars.splice(i, 1);
+            obstacles[i].remove();
+            obstacles.splice(i, 1);
         }
     }
 }
@@ -94,26 +105,26 @@ function loadAndScaleImage(path, scale) {
     return img;
 }
 
-function createCar() {
-    let carLane = [scooterX - carLaneWidth, scooterX, scooterX + carLaneWidth];
-    let laneIndex = floor(random(0, carLane.length));
-    let car = createSprite(carLane[laneIndex], -50, 200, 200);
-    car.addImage(carImage);
-    car.velocity.y = 5;
+function createObstacle() {
+    let obstacleLane = [scooterX - obstacleLaneWidth, scooterX, scooterX + obstacleLaneWidth];
+    let laneIndex = floor(random(0, obstacleLane.length));
+    let obstacle = createSprite(obstacleLane[laneIndex], -50, 200, 200);
+    obstacle.addImage(obstacleImage[floor(random(0, obstacleImage.length))]);
+    obstacle.velocity.y = random(3, 7);
 
     let turnRadians = radians(15);
     switch(laneIndex){
         case 2:
-            car.velocity.x = car.velocity.y * tan(turnRadians);
+            obstacle.velocity.x = obstacle.velocity.y * tan(turnRadians);
             break;
         case 0:
-            car.velocity.x = car.velocity.y * tan(turnRadians * -1);
+            obstacle.velocity.x = obstacle.velocity.y * tan(turnRadians * -1);
             break;
         default:
             break;
     }
 
-    cars.push(car);
+    obstacles.push(obstacle);
 }
 
 function playerHit() {
