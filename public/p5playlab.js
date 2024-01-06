@@ -1,22 +1,20 @@
-let plane;
-let mountains = [];
 
 function preload() {
-    // Step 2: Load the airplane image
-    plane = createSprite(100, 200);
-    plane.addImage('plane', loadImage('images/plane.jpg'));
-    plane.addImage('explode', loadImage('images/exp.png'));
+    // // Step 2: Load the airplane image
+    // plane = createSprite(100, 200);
+    // plane.addImage('plane', loadImage('images/plane.jpg'));
+    // plane.addImage('explode', loadImage('images/exp.png'));
 
-    mountains[0] = createSprite(600, 350);
-    mountains[0].addImage(loadImage('images/m4.png'));
-    mountains[1] = createSprite(100, 400);
-    mountains[1].addImage(loadImage('images/m1.png'));
-    mountains[2] = createSprite(300, 450);
-    mountains[2].addImage(loadImage('images/m3.png'));
-    mountains[3] = createSprite(450, 500);
-    mountains[3].addImage(loadImage('images/m2.png'));
+    // mountains[0] = createSprite(600, 350);
+    // mountains[0].addImage(loadImage('images/m4.png'));
+    // mountains[1] = createSprite(100, 400);
+    // mountains[1].addImage(loadImage('images/m1.png'));
+    // mountains[2] = createSprite(300, 450);
+    // mountains[2].addImage(loadImage('images/m3.png'));
+    // mountains[3] = createSprite(450, 500);
+    // mountains[3].addImage(loadImage('images/m2.png'));
 
-    // Step 5: Load the mountain images
+    // // Step 5: Load the mountain images
 }
 
 function setup() {
