@@ -131,5 +131,6 @@ function playerHit() {
     hp --;
     if(hp <= 0) {
         hp = 0;
+        window.location.href = 'scene4.html';
     }
 }
