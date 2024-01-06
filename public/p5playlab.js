@@ -35,7 +35,6 @@ function draw() {
     drawSprites();
     animation(roads, roadX, roadY);
 
-    drawSprites();
 }
 
 function keyPressed() {
