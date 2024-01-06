@@ -1,7 +1,14 @@
 let roads;
 let scooter;
+
 let width = 1250;
 let height = 690;
+
+let scooterX = width / 2;
+let scooterY = height - 180;
+let laneNum = 1;
+let laneWidth = 320;
+let lanesX = [scooterX - laneWidth, scooterX, scooterX + laneWidth];
 
 function preload() {
    
@@ -12,8 +19,8 @@ function preload() {
     roads = loadAnimation(scaledImages[0], scaledImages[1], scaledImages[2], scaledImages[3]);
 
     //imageMode(CENTER);
-    scooter = createSprite(width / 2, height - 200);
-    scooter.addImage(loadAndScaleImage('images/BeginScene/Scooter.png', 0.18));
+    scooter = createSprite(scooterX, scooterY);
+    scooter.addImage(loadAndScaleImage('images/BeginScene/Scooter.png', 0.13));
 }
 
 function setup() {
@@ -31,9 +38,15 @@ function draw() {
     drawSprites();
 }
 
-function mouseClicked() {
-    if(keyIsDown(LEFT_ARROW)){
-        
+function keyPressed() {
+    if(keyCode === LEFT_ARROW && laneNum != 0){
+        laneNum -= 1;
+        scooter.position.x = lanesX[laneNum];
+        console.log(laneNum);
+    }else if(keyCode === RIGHT_ARROW && laneNum != 2){
+        laneNum += 1;
+        scooter.position.x = lanesX[laneNum];
+        console.log(laneNum);
     }
 }
 
