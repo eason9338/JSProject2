@@ -31,7 +31,8 @@ function preload() {
     carImage = loadAndScaleImage("images/Gaming/barriers/indianTruck.png", 0.05);
 
     for(let i = 1; i <= 5; i++) {
-        path
+        let image = loadAndScaleImage("images/Gaming/health/" + i + "H.PNG", 0.22);
+        hpImage.push(image);
     }
 
 }
@@ -46,6 +47,9 @@ function draw() {
     let roadX = width / 2;
     let roadY = height / 2 + 100;
     animation(roads, roadX, roadY);
+    
+    image(hpImage[1], 10, 10);
+    console.log(hpImage[1]);
 
     drawSprites();
 
