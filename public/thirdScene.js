@@ -2,7 +2,12 @@ let roads;
 let scooter;
 let obstacle;
 let obstacles = [];
-let timer = [];
+
+let timers = [];
+let startTime;
+let timeInterval = 1000;
+let timerIndex = 5;
+
 
 let width = 1250;
 let height = 690;
@@ -19,7 +24,7 @@ let lanesX = [scooterX - laneWidth, scooterX, scooterX + laneWidth];
 let hp = 5;
 let hpImage = [];
 
-let gameTime = 10000;
+let gameTime = 60000;
 let isGaming = true;
 let endImage;
 
@@ -53,6 +58,13 @@ function preload() {
     }
 
     endImage = loadAndScaleImage("images/EndScene/endScene.png", 0.2);
+
+    for(let i = 1; i <= 6; i++) {
+        let image = loadAndScaleImage("images/Gaming/timer/" + i +".png", 0.2);
+        timers.push(image);
+    }
+    timer = createSprite(130, 75);
+    timer.addImage(timers[5]);
 }
 
 function setup() {
@@ -73,17 +85,43 @@ function setup() {
         window.location.href = 'scene6.html';
     }, gameTime + 3000);
 
+    startTime = millis();
 }
 
 function draw() {
     background(120);
+
+    let elapsed = millis() - startTime;
+    let remainingTime = gameTime - elapsed;
+    let newTimerIndex;
+
+
+    if (remainingTime > 45000) {
+        newTimerIndex = 5;
+    } else if (remainingTime > 30000) {
+        newTimerIndex = 4;
+    } else if (remainingTime > 15000) {
+        newTimerIndex = 3;
+    } else if (remainingTime > 10000) {
+        newTimerIndex = 2;
+    } else if (remainingTime > 5000) {
+        newTimerIndex = 1;
+    } else {
+        newTimerIndex = 0;
+    }
+
+
+    if(timerIndex !== newTimerIndex){
+        timerIndex = newTimerIndex;
+        timer.addImage(timers[timerIndex]);
+    }
+
     let roadX = width / 2;
     let roadY = height / 2 + 100;
     animation(roads, roadX, roadY);
     
     if(hp >= 1) {
         image(hpImage[hp-1], 10, 10);
-        console.log(hpImage[1]);
     }
     
 
