@@ -1,7 +1,8 @@
-
+let sounds = [];
 
 function preload() {
 
+    sounds.sad = createAudio('audios/sad.mp3');
     let scaleWidth = 1250 / 1970;
     let scaleHeight = 690 / 1314;
     let scale = min(scaleWidth, scaleHeight); // 選擇較小的縮放比例以保持圖片比例
@@ -22,10 +23,11 @@ function setup() {
 
 function draw() {
 
+    sounds.sad.play();
     drawSprites();
     setTimeout(function() {
             window.location.href = 'scene3.html'; // 替換為你的下一個視窗的URL
-    }, 5000); // 5000 毫秒後執行
+    }, 10000); // 5000 毫秒後執行
 
 
 }

@@ -28,8 +28,13 @@ let gameTime = 60000;
 let isGaming = true;
 let endImage;
 
+let sounds = [];
+
 function preload() {
-   
+
+    sounds.scooter = createAudio('audios/scooter.mp3');
+    sounds.hit = createAudio('audios/hurt.mp3');
+
     let scaledImages = [];
     for (let i = 1; i <= 4; i++) {
         scaledImages.push(loadAndScaleImage('images/Gaming/roads/road' + i + '.png', 0.18));
@@ -68,6 +73,8 @@ function preload() {
 }
 
 function setup() {
+
+    sounds.scooter.play();
     createCanvas(width, height);
 
     setTimeout(function() {
@@ -138,7 +145,8 @@ function draw() {
             console.log("obstacle deleted");
         }
 
-        if(scooter.overlap(obstacles[i])){
+        if (scooter.overlap(obstacles[i])) {
+            sounds.hit.play();
             playerHit();
             obstacles[i].remove();
             obstacles.splice(i, 1);
@@ -196,15 +204,10 @@ function createObstacle(isGaming) {
 }
 
 function playerHit() {
+    
     hp --;
     if(hp <= 0) {
-        hp = 0;
-
-        //scooter.addImage("/images/Gaming/Explosion.PNG");
-    //     setTimeout(function() {
-    //         window.location.href = 'scene4.html';
-    //     }, 1000);
-    // }
-    window.location.href = 'scene4.html';
+        hp = 0
+        window.location.href = 'scene4.html';
     }
 }

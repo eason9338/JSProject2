@@ -1,7 +1,10 @@
 let width = 625;
 let height = 345;
+let sounds = [];
 
 function preload() {
+
+    sounds.end = createAudio('audios/gameover.mp3');
     // 計算縮放比例
     let scaleWidth = 1250 / 2180;
     let scaleHeight = 690 / 1453;
@@ -15,6 +18,7 @@ function preload() {
 
 function setup() {
 
+    sounds.end.play();
     createCanvas(2000, 690);
     startButton = {
         x: 395, // 按鈕的 x 坐標
