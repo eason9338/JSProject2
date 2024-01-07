@@ -53,6 +53,11 @@ function preload() {
     }
 
     endImage = loadAndScaleImage("images/EndScene/endScene.png", 0.2);
+}
+
+function setup() {
+    createCanvas(width, height);
+
     setTimeout(function() {
         endScene = createSprite(width/2, -30);
         endScene.addImage(endImage);
@@ -64,12 +69,9 @@ function preload() {
         isGaming = false;
     }, gameTime);
 
-    
-
-}
-
-function setup() {
-    createCanvas(width, height);
+    setTimeout(function(){
+        window.location.href = 'scene6.html';
+    }, gameTime + 3000);
 
 }
 
@@ -103,11 +105,7 @@ function draw() {
             obstacles[i].remove();
             obstacles.splice(i, 1);
         }
-    }
-
-    setTimeout(function(){
-        window.location.href = 'scene6.html';
-    }, 11500);
+    }    
 }
 
 function keyPressed() {
