@@ -78,8 +78,11 @@ function draw() {
     let roadY = height / 2 + 100;
     animation(roads, roadX, roadY);
     
-    image(hpImage[hp-1], 10, 10);
-    console.log(hpImage[1]);
+    if(hp >= 1) {
+        image(hpImage[hp-1], 10, 10);
+        console.log(hpImage[1]);
+    }
+    
 
     drawSprites();
 
@@ -160,9 +163,11 @@ function playerHit() {
     if(hp <= 0) {
         hp = 0;
 
-        scooter.addImage("Explosion.PNG");
-        setTimeout(function() {
-            window.location.href = 'scene4.html';
-        }, 1000);
+        //scooter.addImage("/images/Gaming/Explosion.PNG");
+    //     setTimeout(function() {
+    //         window.location.href = 'scene4.html';
+    //     }, 1000);
+    // }
+    window.location.href = 'scene4.html';
     }
 }
