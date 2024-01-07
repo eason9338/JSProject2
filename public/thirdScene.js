@@ -2,6 +2,7 @@ let roads;
 let scooter;
 let obstacle;
 let obstacles = [];
+let timer = [];
 
 let width = 1250;
 let height = 690;
@@ -63,7 +64,7 @@ function preload() {
         isGaming = false;
     }, gameTime);
 
-
+    
 
 }
 
